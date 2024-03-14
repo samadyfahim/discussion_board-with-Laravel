@@ -12,6 +12,12 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $user = User::first();
+        $post = Post::first();
+
+        $comment = $post->comments()->create([
+            'user_id' => $user->id,
+            'content' => 'my comment.',
+        ]);
     }
 }

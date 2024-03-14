@@ -12,6 +12,13 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $user = User::first();
+
+        
+        $post = $user->posts()->create([
+            'title' => 'descuss Post',
+            'content' => 'hi everyone.',
+            'published_at' => now(),
+        ]);
     }
 }
