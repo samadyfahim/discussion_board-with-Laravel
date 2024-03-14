@@ -9,13 +9,6 @@ use App\Models\Post;
 class PostController
 {
 
-    public function index()
-    {
-        $posts = Post::latest()->paginate(10);
-        return view('posts.index', compact('posts'));
-    }
-
-
     public function create()
     {
         return view('posts.create');
