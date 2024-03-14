@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+
 
 class PostController
 {
@@ -13,13 +15,13 @@ class PostController
         return view('posts.index', compact('posts'));
     }
 
-    
+
     public function create()
     {
         return view('posts.create');
     }
 
-   
+
     public function store(Request $request)
     {
         $request->validate([
@@ -33,7 +35,7 @@ class PostController
             ->with('success', 'Post created successfully.');
     }
 
-  
+
     public function show(Post $post)
     {
         return view('posts.show', compact('post'));

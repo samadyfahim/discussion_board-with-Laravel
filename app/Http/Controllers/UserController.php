@@ -2,16 +2,28 @@
 
 namespace App\Http\Controllers;
 
-abstract class UserController
+use Illuminate\Routing\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
 {
-     
-    public function index()
+
+    public function getUserPosts($userId)
     {
-        $users = User::latest()->paginate(5);
-        return view('users.index', compact('users'));
+        $user = User::findOrFail($userId);
+        $posts = $user->posts()->get();
+        return view('posts.index', compact('posts'));
     }
 
-  
+    public function getUserComments($userId)
+    {
+        $user = User::findOrFail($userId);
+        $comments = $user->comments()->get();
+        return view('comments.index', compact('comments'));
+    }
+
+
     public function create()
     {
         return view('users.create');
