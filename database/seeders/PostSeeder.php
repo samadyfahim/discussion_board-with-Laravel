@@ -14,7 +14,6 @@ class PostSeeder extends Seeder
     {
         $user = User::first();
 
-        
         $post = $user->posts()->create([
             'title' => 'descuss Post',
             'content' => 'hi everyone.',
