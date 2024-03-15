@@ -18,9 +18,10 @@ class CommentSeeder extends Seeder
         $user = User::first();
         $post = Post::first();
 
-        $comment = $post->comments()->create([
-            'user_id' => $user->id,
-            'content' => 'my comment.',
-        ]);
+        $comment = new Comment();
+        $comment->user_id = $user->id;
+        $comment->post_id = $post->id;
+        $comment->content = "This is my comment.";
+        $comment->save();
     }
 }

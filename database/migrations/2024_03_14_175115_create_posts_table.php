@@ -13,7 +13,8 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
             $table->text('content');
             $table->timestamp('published_at')->nullable();
