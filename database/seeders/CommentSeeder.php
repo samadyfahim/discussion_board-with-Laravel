@@ -23,5 +23,12 @@ class CommentSeeder extends Seeder
         $comment->post_id = $post->id;
         $comment->content = "This is my comment.";
         $comment->save();
+
+        Comment::factory()->count(20)->create();
+
+        $post = Post::factory()->create();
+        $comment = Comment::factory()->create([
+            'post_id' => $post->id,
+        ]);
     }
 }

@@ -18,5 +18,8 @@ class UserSeeder extends Seeder
         $user->email = "fahim@gmail.com";
         $user->password = bcrypt("password");
         $user->save();
+
+
+        User::factory()->count(10)->create();
     }
 }

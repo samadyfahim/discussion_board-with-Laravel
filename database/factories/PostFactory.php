@@ -13,9 +13,10 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(),            'title' => $this->faker->sentence,
-            'content' => $this->faker->paragraph,
-            'published_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'user_id' => User::factory(),  //all()->random->id to get form existing data
+            'title' => fake()->sentence,
+            'content' => fake()->paragraph,
+            'published_at' => fake()->dateTimeBetween('-3 year', 'now'),
         ];
     }
 }
