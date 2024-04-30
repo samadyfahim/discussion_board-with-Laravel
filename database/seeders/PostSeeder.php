@@ -14,11 +14,6 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        $post = new Post();
-        $post->title = "My post";
-        $post->content = "this is the content.";
-        $post->published_at = now();
-        $post->save();
 
         Post::factory()->count(10)->create();
         Post::factory()
