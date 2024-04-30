@@ -15,6 +15,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/add-post', function () {
+    return view('add-post');
+})->middleware(['auth', 'verified'])->name('add-post');
+
+
 Route::get('/dashboard', [PostController::class, 'viewPosts'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

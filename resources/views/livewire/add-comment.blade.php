@@ -6,7 +6,9 @@
             @error('content') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
         <div class="mt-3">
-            <button type="submit" class="inline-fl">Add Comment</button>
+            <button type="submit" class="inline-flex">
+                Add Comment
+            </button>
         </div>
     </form>
 </div>

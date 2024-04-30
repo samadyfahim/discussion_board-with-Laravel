@@ -3,28 +3,28 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
         </h2>
+        <div>
+            <button onclick="showViewPosts()" class="bg-gray-100 hover:bg-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">View Posts</button>
+            <button onclick="showAddPostForm()" class="bg-gray-100 hover:bg-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Post</button>
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @foreach($posts as $post)
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
-                <div class="p-6 text-gray-900 dark:text-gray-200">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold">{{ $post->title }}</h3>
-                        <p class="text-sm text-gray-800 dark:text-gray-300">Posted by: {{ $post->user->name }}</p>
-                    </div>
-
-                    <p class="text-gray-800 dark:text-gray-300">{{ $post->content }}</p>7
-
-                     <livewire:add-comment :post="$post" :key="$post->id" />
-
-                </div>
-            </div>
-            @endforeach
-            <div class="mt-4 d-flex">
-                {{ $posts->links() }}
-            </div>
-        </div>
+    <div id="viewPostsSection">
+        <livewire:view-posts/>
     </div>
+    <div id="addPostFormSection" style="display: none;">
+        <livewire:add-post-form/>
+    </div>
+
+    <script>
+        function showViewPosts() {
+            document.getElementById("viewPostsSection").style.display = "block";
+            document.getElementById("addPostFormSection").style.display = "none";
+        }
+
+        function showAddPostForm() {
+            document.getElementById("viewPostsSection").style.display = "none";
+            document.getElementById("addPostFormSection").style.display = "block";
+        }
+    </script>
 </x-app-layout>

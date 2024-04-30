@@ -13,5 +13,4 @@ class PostController
         $posts = Post::with('user')->paginate(10);
         return view('dashboard', ['posts' => $posts]);
     }
-
 }

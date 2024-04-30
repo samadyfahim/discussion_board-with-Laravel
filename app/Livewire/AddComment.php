@@ -10,34 +10,25 @@ class AddComment extends Component
 {
     public $post;
     public $content;
-
-    protected $rules = [
-        'content' => 'required|string|min:3',
-    ];
-
     public function mount(Post $post)
     {
         $this->post = $post;
     }
 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
+    protected $rules = [
+        'content' => 'required|string|max:255',
+    ];
 
     public function addComment()
     {
-        $validatedData = $this->validate();
-
+        $this->validate();
         Comment::create([
             'post_id' => $this->post->id,
-            'content' => $validatedData['content'],
+            'content' => $this->content,
         ]);
-
         $this->content = '';
         $this->emit('commentAdded');
     }
-
 
     public function render()
     {
