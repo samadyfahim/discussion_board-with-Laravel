@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Models\User;
+use App\Livewire\Profile;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,6 +15,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/profile/{id}', Profile::class)
+    ->middleware(['auth', 'verified'])
+    ->name('profile');
+
 
 
 Route::get('/dashboard', [PostController::class, 'viewPosts'])->name('dashboard');

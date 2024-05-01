@@ -17,7 +17,14 @@
                     </x-nav-link>
                 </div>
 
-        
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @auth 
+                        <x-nav-link :href="route('profile', ['id' => Auth::user()->id])" :active="request()->routeIs('profile', ['id' => Auth::user()->id])">
+                            {{ __('Profile') }}
+                        </x-nav-link>
+                    @endauth
+                </div>
+
                 
             </div>
 

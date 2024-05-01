@@ -3,12 +3,12 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Facades\Log;
 use Livewire\WithFileUploads;
 
-
-class ViewPosts extends Component
+class Profile extends Component
 {
     use WithFileUploads;
     public $showModal = false;
@@ -17,6 +17,18 @@ class ViewPosts extends Component
     public $title;
     public $content;
     public $image;
+    public $userId;
+    public $posts;
+
+    public function mount($id)
+    {
+        $this->userId = $id;
+        $this->loadPosts();
+    }
+    public function loadPosts()
+    {
+        $this->posts = Post::where('user_id', $this->userId)->latest()->get();
+    }
 
     public function toggleModal()
     {
@@ -92,10 +104,17 @@ class ViewPosts extends Component
     }
 
 
+
+
     public function render()
     {
-        Log::info('render method called');
-        $posts = Post::latest()->paginate(10);
-        return view('livewire.view-posts', ['posts' => $posts]);
+        $user = User::findOrFail($this->userId);
+        Log::info($this->userId);
+        $posts = $user->posts()->latest()->paginate(10);
+        Log::info($posts);
+
+
+        return view('livewire.profile', ['user' => $user, 'posts' => $posts])
+            ->layout('layouts.app');
     }
 }

@@ -9,6 +9,7 @@
         </button>
         <p>Number of comments: {{ $post->comments->count() }}</p>
     </div>
+    
     @if($showComments)
         <div>
             @foreach($comments as $comment)
@@ -17,22 +18,25 @@
                         <span class="font-semibold text-gray-900">{{ $comment->user->name }}</span>
                         <span>: {{ $comment->content }}</span>
                     </div>
-                    <div x-data="{ open: false }">
-                        <button @click="open = !open" class="p-2 focus:outline-none focus:shadow-outline">
-                            <svg class="h-6 w-6 fill-current text-gray-600 hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4zm0-10a2 2 0 100 4 2 2 0 000-4zm0 18a2 2 0 100-4 2 2 0 000 4z"/></svg>
-                        </button>
-                        <div x-show="open" @click.away="open = false" class="mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
-                            <button wire:click="loadComment({{ $comment->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                                Edit 
+                    @if(Auth::id() === $comment->user_id)
+                        <div x-data="{ open: false }">
+                            <button @click="open = !open" class="p-2 focus:outline-none focus:shadow-outline">
+                                <svg class="h-6 w-6 fill-current text-gray-600 hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4zm0-10a2 2 0 100 4 2 2 0 000-4zm0 18a2 2 0 100-4 2 2 0 000 4z"/></svg>
                             </button>
-                            <button wire:click.prevent="deleteComment({{ $comment->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Delete</button>
+                            <div x-show="open" @click.away="open = false" class="mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
+                                <button wire:click="loadComment({{ $comment->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                    Edit 
+                                </button>
+                                <button wire:click.prevent="deleteComment({{ $comment->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Delete</button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             @endforeach
         </div>
     @endif
     @endif
+
     @if($showModal)
         <div class="fixed inset-0 px-4 py-6 flex items-center justify-center">
             <div class="bg-white p-5 rounded-lg">
@@ -49,7 +53,4 @@
             </div>
         </div>
     @endif
-
 </div>
-
-

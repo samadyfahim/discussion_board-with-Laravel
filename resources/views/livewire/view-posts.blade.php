@@ -3,20 +3,27 @@
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-4">
             <div class="p-6 text-gray-900 dark:text-gray-200">
                 <div class="flex justify-between items-center">
-                    <h3 class="mb-2 text-lg font-semibold">Posted by: {{ $post->user->name }}</h3>
-                    <div x-data="{ open: false }">
-                        <button @click="open = !open" class="p-2 focus:outline-none focus:shadow-outline">
-                            <svg class="h-6 w-6 fill-current text-gray-600 hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4zm0-10a2 2 0 100 4 2 2 0 000-4zm0 18a2 2 0 100-4 2 2 0 000 4z"/></svg>
-                        </button>
-                        <div x-show="open" @click.away="open = false" class="mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
-                            <div>
-                                <button wire:click="loadPost({{ $post->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
-                                    Edit 
-                                </button>
+                    <h3 class="mb-2 text-lg font-semibold">
+                        <a href="{{ route('profile', ['id' => $post->user->id]) }}" 
+                            class="text-blue-600 hover:text-blue-800">
+                            {{ $post->user->name }}
+                        </a>
+                    </h3>
+                    @if(Auth::id() === $post->user_id) 
+                        <div x-data="{ open: false }">
+                            <button @click="open = !open" class="p-2 focus:outline-none focus:shadow-outline">
+                                <svg class="h-6 w-6 fill-current text-gray-600 hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4zm0-10a2 2 0 100 4 2 2 0 000-4zm0 18a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                            </button>
+                            <div x-show="open" @click.away="open = false" class="mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
+                                <div>
+                                    <button wire:click="loadPost({{ $post->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        Edit 
+                                    </button>
+                                </div>
+                                <button wire:click.prevent="deletePost({{ $post->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Delete</button>
                             </div>
-                            <button wire:click.prevent="deletePost({{ $post->id }})" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Delete</button>
                         </div>
-                    </div>
+                    @endif
                 </div>
                 <div>
                     <p class="mb-2 text-sm text-gray-800 dark:text-gray-300">{{ $post->title }}</p>
