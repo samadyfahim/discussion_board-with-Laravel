@@ -1,7 +1,7 @@
-<div>
-    <form wire:submit.prevent="savePost">
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <form wire:submit.prevent="post" enctype="multipart/form-data">
         @csrf
-        <div class="mb-4">
+        <div class="mb-5 mt-10">
             <label for="title" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Title:</label>
             <input 
                 type="text" 
@@ -10,7 +10,7 @@
                 placeholder="Titel of your discussion"
                 class="appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
-        <div class="mb-4">
+        <div class="mb-5 mt-5">
             <label for="content" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Content:</label>
             <textarea wire:model="content" id="content" rows="5" class="appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
         </div>

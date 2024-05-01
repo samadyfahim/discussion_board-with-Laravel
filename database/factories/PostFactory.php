@@ -17,6 +17,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence,
             'content' => fake()->paragraph,
             'published_at' => fake()->dateTimeBetween('-3 year', 'now'),
+            'image' => 'https://via.placeholder.com/400',
             'user_id' => User::factory()->create()->id,
         ];
     }

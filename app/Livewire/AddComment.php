@@ -5,9 +5,12 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+
 
 class AddComment extends Component
 {
+
     public $post;
     public $content;
     public function mount(Post $post)
@@ -21,17 +24,20 @@ class AddComment extends Component
 
     public function addComment()
     {
+        logger('Current content: ', ['content' => $this->content]);
         $this->validate();
-        Comment::create([
-            'post_id' => $this->post->id,
-            'content' => $this->content,
-        ]);
-        $this->content = '';
-        $this->emit('commentAdded');
-    }
+        $userId = Auth::id();
 
-    public function render()
-    {
-        return view('livewire.add-comment');
+        $comment = new Comment;
+
+        $comment->post_id = $this->post->id;
+        $comment->user_id = $userId;
+        $comment->content = $this->content;
+        $comment->save();
+
+
+        $this->content = '';
+
+        return redirect()->route('dashboard');
     }
 }

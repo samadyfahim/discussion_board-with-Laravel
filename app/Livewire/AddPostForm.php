@@ -5,6 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AddPostForm extends Component
 {
@@ -20,28 +22,30 @@ class AddPostForm extends Component
         'image' => 'image|max:1024',
     ];
 
-    public function savePost()
+    public function post()
     {
         $this->validate();
 
+        $imagePath = null;
+
         if ($this->image) {
             $imagePath = $this->image->store('images', 'public');
-            $postData['image'] = $imagePath;
         }
 
-        // Create the post
-        Post::create([
-            'title' => $this->title,
-            'content' => $this->content,
-            'image' => $imagePath ?? null,
-        ]);
+        $userId = Auth::id();
+
+        $post = new Post();
+        $post->title = $this->title;
+        $post->content = $this->content;
+        $post->image = $imagePath;
+        $post->user_id = $userId;
+
+        $post->save();
 
         session()->flash('message', 'Post created successfully.');
 
         $this->reset(['title', 'content', 'image']);
-    }
-    public function render()
-    {
-        return view('livewire.add-post-form');
+
+        return redirect()->route('dashboard');
     }
 }
