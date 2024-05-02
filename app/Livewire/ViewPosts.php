@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\Post;
 use Illuminate\Support\Facades\Log;
 use Livewire\WithFileUploads;
-
+use App\Models\Image;
 
 class ViewPosts extends Component
 {
@@ -30,33 +30,34 @@ class ViewPosts extends Component
         $this->postId = $this->post->id;
         $this->title = $this->post->title;
         $this->content = $this->post->content;
-        $this->image = $this->post->image;
+        $this->image = $this->post->imagePath;
         $this->toggleModal();
     }
 
 
     public function save()
     {
-        Log::info('save method called with post ID: ' . $this->postId);
         $this->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'image' => 'sometimes|file|image|max:5000'
+            'image' => 'image|max:1024'
         ]);
-        Log::info('save pass validation method called');
 
         $post = Post::find($this->postId);
-        Log::info('post find');
 
         if ($post) {
-            Log::info($post->title);
             $post->title = $this->title;
             $post->content = $this->content;
             if ($this->image) {
-                $post->image = $this->image->store('images', 'public');
+                $imagePath = $this->image->store('images', 'public');
+
+                $image = $post->imagePath ?: new Image();
+                $image->imagePath = $imagePath;
+                $image->imageable_id = $post->id;
+                $image->imageable_type = get_class($post);
+                $image->save();
             }
             $post->save();
-            Log::info('saved');
             $this->showModal = false;
             session()->flash('message', 'Post updated successfully.');
             $this->resetInputFields();
@@ -64,7 +65,6 @@ class ViewPosts extends Component
             session()->flash('error', 'Post not found.');
         }
     }
-
 
     public function resetInputFields()
     {
@@ -94,7 +94,6 @@ class ViewPosts extends Component
 
     public function render()
     {
-        Log::info('render method called');
         $posts = Post::latest()->paginate(10);
         return view('livewire.view-posts', ['posts' => $posts]);
     }

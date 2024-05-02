@@ -55,8 +55,7 @@ class CommentAddedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'just notefy you a new comment has been added to your post.' . $this->comment->content,
-            'post_id' => $this->comment->post_id
+            'message' => 'just notefy you a new comment has been added to your post. ' . $this->comment->content
         ];
     }
 }

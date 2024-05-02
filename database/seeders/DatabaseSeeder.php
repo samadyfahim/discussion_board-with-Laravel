@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PostSeeder::class,
             CommentSeeder::class,
+            ImageSeeder::class
         ]);
 
         // User::factory(10)->create();

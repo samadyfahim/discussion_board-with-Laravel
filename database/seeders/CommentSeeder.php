@@ -18,12 +18,6 @@ class CommentSeeder extends Seeder
         $user = User::first();
         $post = Post::first();
 
-        $comment = new Comment();
-        $comment->user_id = $user->id;
-        $comment->post_id = $post->id;
-        $comment->content = "This is my comment.";
-        $comment->save();
-
         Comment::factory()->count(20)->create();
 
         $post = Post::factory()->create();

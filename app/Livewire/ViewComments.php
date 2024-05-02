@@ -5,15 +5,19 @@ namespace App\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Log;
 use App\Models\Post;
+use Livewire\WithFileUploads;
+use App\Models\Image;
 
 class ViewComments extends Component
 {
+    use WithFileUploads;
     public $showComments = false;
     public $post;
     public $hasComments = false;
     public $showModal = false;
     public $content;
     public $commentId;
+    public $image;
 
 
     protected $listeners = [
@@ -70,6 +74,15 @@ class ViewComments extends Component
         if ($comment) {
             $comment->content = $this->content;
             $comment->save();
+            if ($this->image) {
+                $imagePath = $this->image->store('images', 'public');
+
+                $image = $comment->imagePath ?: new Image();
+                $image->imagePath = $imagePath;
+                $image->imageable_id = $comment->id;
+                $image->imageable_type = get_class($comment);
+                $image->save();
+            }
             $this->showModal = false;
             session()->flash('message', 'Comment updated successfully.');
         } else {

@@ -53,7 +53,8 @@ class Profile extends Component
         $this->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'image' => 'sometimes|file|image|max:5000'
+            'image' => 'file|image|max:1024'
+
         ]);
         Log::info('save pass validation method called');
 

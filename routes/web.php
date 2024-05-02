@@ -41,8 +41,5 @@ Route::get('/notification', Notification::class)
     ->middleware(['auth', 'verified'])
     ->name('notification');
 
-// Route::get('/dashboard', Dashboard::class)
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
 
 require __DIR__ . '/auth.php';

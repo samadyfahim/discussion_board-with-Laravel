@@ -7,13 +7,16 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use App\Events\CommentAdded;
+use Livewire\WithFileUploads;
 use App\Notifications\CommentAddedNotification;
+use App\Models\Image;
 
 class AddComment extends Component
 {
-
+    use WithFileUploads;
     public $post;
     public $content;
+    public $image;
     public function mount(Post $post)
     {
         $this->post = $post;
@@ -21,6 +24,7 @@ class AddComment extends Component
 
     protected $rules = [
         'content' => 'required|string|max:255',
+        'image' => 'image|max:1024',
     ];
 
     public function addComment()
@@ -34,6 +38,14 @@ class AddComment extends Component
         $comment->user_id = $userId;
         $comment->content = $this->content;
         $comment->save();
+        if ($this->image) {
+            $imagePath = $this->image->store('images', 'public');
+
+            $image = new Image();
+            $image->imagePath = $imagePath;
+            $image->imageable()->associate($comment);
+            $image->save();
+        }
 
         // using service provider even when commnet added
         // event(new CommentAdded($comment));
@@ -48,7 +60,7 @@ class AddComment extends Component
         }
 
         $this->content = '';
-        $this->reset('content');
+        $this->reset('content', 'image');
     }
     public function render()
     {

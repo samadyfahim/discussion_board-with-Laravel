@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 
     public function user()
     {

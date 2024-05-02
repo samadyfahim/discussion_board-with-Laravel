@@ -7,10 +7,17 @@
                 placeholder="Enter your comment here..."></textarea>
             @error('content') <span class="text-red-500">{{ $message }}</span> @enderror
         </div>
-        <div class="mt-3">
-            <button type="submit" class="inline-flex">
-                Add Comment
-            </button>
+        <div class="flex justify-between">
+            <div class="mb-4">
+                <label for="image" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Image:</label>
+                <input type="file" wire:model="image" id="image" placeholder="Add your Image"
+                    class="appearance-none border rounded py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit"
+                    class="bg-blue-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Add Comment </button>
+            </div>
         </div>
     </form>
     @endauth
