@@ -39,13 +39,13 @@
                     @endif
                 </div>
                 <div>
-                    <p class="mb-2 text-sm text-gray-800 dark:text-gray-300">{{ $post->title }}</p>
-                    <p class="mb-2 text-sm text-gray-800 dark:text-gray-300">{{ $post->content }}</p>
+                    <p class="mb-2 text-sm dark:text-gray-300 text-gray-800">{{ $post->title }}</p>
+                    <p class="mb-2 text-sm dark:text-gray-300 text-gray-800">{{ $post->content }}</p>
                 </div>
 
-                @if($post->image)
-                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
-                @endif
+                @foreach($post->images as $image)
+                <img src="{{ asset('storage/' . $image->imagePath) }}" alt="{{ $post->title }}">
+                @endforeach
 
                 <livewire:view-comments :post="$post" :key="'view-comments-' . $post->id" />
                 <livewire:add-comment :post="$post" :key="'add-comment-' . $post->id" />

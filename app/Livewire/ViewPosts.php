@@ -10,6 +10,11 @@ use App\Models\Image;
 
 class ViewPosts extends Component
 {
+    protected $listeners = [
+        'commentAdded' => 'refreshComments'
+    ];
+
+
     use WithFileUploads;
     public $showModal = false;
     public $post;

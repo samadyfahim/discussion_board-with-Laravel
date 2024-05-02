@@ -29,7 +29,6 @@ class AddComment extends Component
 
     public function addComment()
     {
-        logger('Current content: ', ['content' => $this->content]);
         $this->validate();
         $userId = Auth::id();
 

@@ -42,7 +42,7 @@ class Profile extends Component
         $this->postId = $this->post->id;
         $this->title = $this->post->title;
         $this->content = $this->post->content;
-        $this->image = $this->post->image;
+        $this->image = $this->post->imagePath;
         $this->toggleModal();
     }
 
@@ -66,7 +66,13 @@ class Profile extends Component
             $post->title = $this->title;
             $post->content = $this->content;
             if ($this->image) {
-                $post->image = $this->image->store('images', 'public');
+                $imagePath = $this->image->store('images', 'public');
+
+                $image = $post->imagePath ?: new Image();
+                $image->imagePath = $imagePath;
+                $image->imageable_id = $post->id;
+                $image->imageable_type = get_class($post);
+                $image->save();
             }
             $post->save();
             Log::info('saved');

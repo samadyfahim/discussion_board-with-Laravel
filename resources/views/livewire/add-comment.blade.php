@@ -11,7 +11,8 @@
             <div class="mb-4">
                 <label for="image" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Image:</label>
                 <input type="file" wire:model="image" id="image" placeholder="Add your Image"
-                    class="appearance-none border rounded py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    class="appearance-none border rounded p-3 text-sm text-gray-600 leading-tight focus:outline-none focus:shadow-outline">
+                @error('image') <span class="text-red-600">{{ $message }}</span> @enderror
             </div>
             <div class="flex items-center justify-between">
                 <button type="submit"
