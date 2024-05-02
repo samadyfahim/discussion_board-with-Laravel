@@ -13,6 +13,9 @@ use App\Livewire\Notification;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/guest', function () {
+    return view('dashboard');
+})->name('guest');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
