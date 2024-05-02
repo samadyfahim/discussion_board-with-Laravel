@@ -48,4 +48,8 @@ class AddPostForm extends Component
 
         return redirect()->route('dashboard');
     }
+    public function render()
+    {
+        return view('livewire.add-post-form')->layout('layouts.app');
+    }
 }

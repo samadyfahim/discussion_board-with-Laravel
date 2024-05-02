@@ -6,6 +6,12 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    protected $listen = [
+        'App\Events\CommentAdded' => [
+            'App\Listeners\RefreshCommentView',
+        ],
+    ];
     /**
      * Register any application services.
      */

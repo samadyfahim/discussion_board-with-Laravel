@@ -5,12 +5,6 @@
         </h2>
     </x-slot>
     <div>
-        <livewire:add-post-form/>
+        <livewire:view-posts />
     </div>
-    <div >
-        <livewire:view-posts/>
-    </div>
-  
-
-
 </x-app-layout>

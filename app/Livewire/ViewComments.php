@@ -15,6 +15,17 @@ class ViewComments extends Component
     public $content;
     public $commentId;
 
+
+    protected $listeners = [
+        'commentAdded' => 'refreshComments'
+    ];
+
+    public function refreshComments()
+    {
+        $this->post->load('comments');
+    }
+
+
     protected $rules = [
         'content' => 'required|string',
     ];
@@ -55,7 +66,7 @@ class ViewComments extends Component
     public function save()
     {
         $this->validate();
-        $comment = $this->post->comments->find($this->commentId);  // Use $this->commentId
+        $comment = $this->post->comments->find($this->commentId);
         if ($comment) {
             $comment->content = $this->content;
             $comment->save();

@@ -103,17 +103,12 @@ class Profile extends Component
         }
     }
 
-
-
-
     public function render()
     {
         $user = User::findOrFail($this->userId);
         Log::info($this->userId);
         $posts = $user->posts()->latest()->paginate(10);
         Log::info($posts);
-
-
         return view('livewire.profile', ['user' => $user, 'posts' => $posts])
             ->layout('layouts.app');
     }

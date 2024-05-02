@@ -37,9 +37,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
         ]);
-
         User::create($request->all());
-
         return redirect()->route('users.index')
             ->with('success', 'User has been created successfully.');
     }
