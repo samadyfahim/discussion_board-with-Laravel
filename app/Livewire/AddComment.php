@@ -24,30 +24,33 @@ class AddComment extends Component
 
     protected $rules = [
         'content' => 'required|string|max:255',
-        'image' => 'image|max:1024',
+        'image' => 'nullable|image|max:1024',
     ];
 
     public function addComment()
     {
         $this->validate();
         $userId = Auth::id();
-
         $comment = new Comment;
         $comment->post_id = $this->post->id;
         $comment->user_id = $userId;
         $comment->content = $this->content;
         $comment->save();
+
         if ($this->image) {
             $imagePath = $this->image->store('images', 'public');
-
             $image = new Image();
             $image->imagePath = $imagePath;
             $image->imageable()->associate($comment);
             $image->save();
         }
+        $this->content = '';
+        $this->image = null;
+        $this->reset(['content', 'image']);
+
 
         // using service provider even when commnet added
-        // event(new CommentAdded($comment));
+        event(new CommentAdded($comment));
 
         $this->dispatch('commentAdded');
 
@@ -57,9 +60,6 @@ class AddComment extends Component
         if ($postCreatedBy) {
             $postCreatedBy->notify(new CommentAddedNotification($comment, $postCreatedBy));
         }
-
-        $this->content = '';
-        $this->reset('content', 'image');
     }
     public function render()
     {

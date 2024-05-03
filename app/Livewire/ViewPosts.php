@@ -45,7 +45,7 @@ class ViewPosts extends Component
         $this->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'image' => 'image|max:1024'
+            'image' => 'nullable|image|max:1024'
         ]);
 
         $post = Post::find($this->postId);
@@ -53,15 +53,20 @@ class ViewPosts extends Component
         if ($post) {
             $post->title = $this->title;
             $post->content = $this->content;
-            if ($this->image) {
-                $imagePath = $this->image->store('images', 'public');
 
-                $image = $post->imagePath ?: new Image();
+            if ($this->image) {
+                foreach ($post->images as $image) {
+                    \Storage::disk('public')->delete($image->imagePath);
+                    $image->delete();
+                }
+                $imagePath = $this->image->store('images', 'public');
+                $image = new Image();
                 $image->imagePath = $imagePath;
                 $image->imageable_id = $post->id;
                 $image->imageable_type = get_class($post);
                 $image->save();
             }
+
             $post->save();
             $this->showModal = false;
             session()->flash('message', 'Post updated successfully.');
@@ -70,6 +75,7 @@ class ViewPosts extends Component
             session()->flash('error', 'Post not found.');
         }
     }
+
 
     public function resetInputFields()
     {

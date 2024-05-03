@@ -33,13 +33,20 @@
                 @endif
             </div>
             <div>
-                <p class="mb-2 text-sm text-gray-800 dark:text-gray-300">{{ $post->title }}</p>
-                <p class="mb-2 text-sm text-gray-800 dark:text-gray-300">{{ $post->content }}</p>
+                <p class="m-5 text-sm text-gray-800 dark:text-gray-300">{{ $post->title }}</p>
+                <p class="m-5 text-sm text-gray-800 dark:text-gray-300">{{ $post->content }}</p>
             </div>
 
-            @foreach($post->images as $image)
-            <img src="{{ asset('storage/' . $image->imagePath) }}" alt="{{ $post->title }}">
-            @endforeach
+            <div class="overflow-x-auto">
+                <div class="flex justify-content-center">
+                    @foreach($post->images as $image)
+                    <div class="m-5">
+                        <img src="{{ asset('storage/' . $image->imagePath) }}" alt="{{ $post->title }}"
+                            class="max-w-full h-80">
+                    </div>
+                    @endforeach
+                </div>
+            </div>
 
             <livewire:add-comment :post="$post" :key="'add-comment-' . $post->id" />
             <livewire:view-comments :post="$post" :key="'view-comments-' . $post->id" />

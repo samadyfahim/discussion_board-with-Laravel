@@ -20,7 +20,7 @@ class AddPostForm extends Component
     protected $rules = [
         'title' => 'required|string|max:255',
         'content' => 'required|string',
-        'image' => 'image|max:1024',
+        'image' => 'nullable|image|max:1024',
     ];
 
     public function post()

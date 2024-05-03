@@ -51,6 +51,11 @@
     <div class="fixed inset-1 flex items-center justify-center">
         <div class="bg-white p-6">
             <textarea wire:model="content" class="w-full border rounded px-3 py-2 text-gray-700"></textarea>
+            <div class="mb-4">
+                <label for="image" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Image:</label>
+                <input type="file" wire:model="image" id="image"
+                    class="appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
             <div class="flex justify-between">
                 <button wire:click="save"
                     class=" justify-between bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">

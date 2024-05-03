@@ -70,19 +70,27 @@ class ViewComments extends Component
     public function save()
     {
         $this->validate();
-        $comment = $this->post->comments->find($this->commentId);
+
+        $comment = $this->post->comments()->find($this->commentId);
+
         if ($comment) {
             $comment->content = $this->content;
             $comment->save();
+
             if ($this->image) {
+                foreach ($comment->images as $image) {
+                    \Storage::disk('public')->delete($image->imagePath);
+                    $image->delete();
+                }
                 $imagePath = $this->image->store('images', 'public');
 
-                $image = $comment->imagePath ?: new Image();
+                $image = new Image();
                 $image->imagePath = $imagePath;
                 $image->imageable_id = $comment->id;
                 $image->imageable_type = get_class($comment);
                 $image->save();
             }
+
             $this->showModal = false;
             session()->flash('message', 'Comment updated successfully.');
         } else {
