@@ -1,1 +1,0 @@
-<h1 class="text-2xl font-logo font-semibold text-blue-500">What Is Up?</h1>
