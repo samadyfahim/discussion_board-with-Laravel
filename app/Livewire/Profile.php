@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Image;
 use Illuminate\Support\Facades\Log;
 use Livewire\WithFileUploads;
 
